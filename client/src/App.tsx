@@ -5,10 +5,6 @@ import PixelBlast from './components/PixelBlast';
 import GlareHover from './components/GlareHover';
 import LogoLoop from './components/LogoLoop'; // Import LogoLoop
 import MobileMenu from './components/MobileMenu'; // Import MobileMenu
-
-// Import local images
-import inventoryDashboardImage from '/images/halaman Dashboard admin panel website inventory.png?url';
-import genericPlaceholderImage from '/images/halaman login website inventory.png?url';
 // import AnimatedNavLink from './components/AnimatedNavLink'; // Removed AnimatedNavLink import
 import { // Import react-icons
   SiTypescript,
@@ -43,12 +39,12 @@ const socket = io(SOCKET_URL);
 // --- (2) DEFINISI TIPE DATA ---
 interface IProject {
   id: number;
-  title: string;
+  name: string; // Changed from title
   description: string;
-  tech_stack: string;
-  github_url: string;
-  live_url: string;
-  image_src?: string; // Add this line
+  image_url: string; // Changed from image_src
+  project_url: string; // Changed from live_url
+  source_code_url: string; // Changed from github_url
+  tech_used: string; // Changed from tech_stack
 }
 
 interface IContactForm {
@@ -115,13 +111,7 @@ const App = () => {
     const fetchProjects = async () => {
       try {
         const response = await axios.get<IProject[]>(`${API_URL}/projects`);
-        const projectsWithImages = response.data.map(project => {
-          if (project.title === "Sistem Manajemen Inventaris & Order Picking") {
-            return { ...project, image_src: inventoryDashboardImage, github_url: "https://github.com/notnat1/website-order-picking.git" };
-          }
-          return { ...project, image_src: genericPlaceholderImage };
-        }).filter(project => project.title === "Sistem Manajemen Inventaris & Order Picking");
-        setProjects(projectsWithImages);
+        setProjects(response.data);
       } catch (error) {
         console.error("Gagal fetch projects (Backend mungkin belum nyala):", error);
       }
@@ -359,15 +349,15 @@ const App = () => {
                 // Looping data dari state projects
                 projects.map((project) => (
                   <GlareHover key={project.id} className="overflow-hidden transition-all duration-300 bg-gray-900 border border-gray-700 shadow-2xl bg-opacity-70 rounded-2xl group hover:border-blue-500 hover:shadow-blue-500/20">
-                    <img src={project.image_src} alt={project.title} className="object-cover w-full h-56 transition-transform duration-300 group-hover:scale-105"/>
+                    <img src={project.image_url} alt={project.name} className="object-cover w-full h-56 transition-transform duration-300 group-hover:scale-105"/>
                     <div className="p-8">
-                      <h3 className="mb-3 text-2xl font-bold">{project.title}</h3>
+                      <h3 className="mb-3 text-2xl font-bold">{project.name}</h3>
                       <p className="mb-5 text-gray-400">{project.description}</p>
-                      <p className="mb-6 text-sm font-semibold text-blue-300">Tech: {project.tech_stack}</p>
+                      <p className="mb-6 text-sm font-semibold text-blue-300">Tech: {project.tech_used}</p>
                       <div className="flex space-x-4">
-                        <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-gray-700 rounded-lg hover:bg-gray-600">Source Code</a>
-                        {project.live_url && ( // Only show Live Demo if URL exists
-                          <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-500">Live Demo</a>
+                        <a href={project.source_code_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-gray-700 rounded-lg hover:bg-gray-600">Source Code</a>
+                        {project.project_url && ( // Only show Live Demo if URL exists
+                          <a href={project.project_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-500">Live Demo</a>
                         )}
                       </div>
                     </div>
