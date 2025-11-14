@@ -1,0 +1,33 @@
+1. Halaman Profil (Page Left)Ini adalah elevator pitch lo.Elemen HTMLKonten Baru yang Strategis
+<h1>Mr Nathan/h1><h1>Nathanael Ignacio Janis</h1><h3>Web Developer</h3><h3>Fullstack & DevOps Engineer</h3><p>...</p>"Mahasiswa Teknik Informatika tingkat akhir yang berorientasi pada arsitektur perangkat lunak skalabel, high-performance, dan Real-Time. Kombinasi unik saya dari Fullstack Development (Node.js, TypeScript, React) dan pengalaman DevOps profesional (AWS, Terraform, CI/CD) membuat saya siap untuk membangun dan mengelola aplikasi mission-critical."<a>Download CV</a>(Ganti dengan link CV lo)
+
+2. Page 1: Pengalaman Profesional (Work Experience)Ini adalah bukti skill DevOps lo (AWS, Terraform).TahunPosisi & TempatDeskripsi yang Ditargetkan2025 - SkrgDevOps & Backend Engineer Intern - PT Kompas Cyber Media"Terlibat dalam mengotomatisasi deployment dan manajemen infrastruktur cloud skala besar di AWS. Membangun dan memelihara pipeline CI/CD (Jenkins/GitHub Actions) dan deployment IaaC menggunakan Ansible dan Docker."2022 - 2024Software Developer (Freelance/Project) - Modern Coffe Shop Website "Mengembangkan solusi backend dan fullstack menggunakan Laravel dan Node.js untuk klien kecil dan menengah. Fokus pada code quality, testing, dan RESTful API design."
+
+3. Page 2: Pendidikan (Education)Pamerkan spesialisasi lo.TahunInstitusi & BidangDeskripsi yang Ditargetkan2021 - SkrgS1 Teknik Informatika - Politeknik Negeri Manado"Fokus Studi: Rekayasa Perangkat Lunak & Komputasi Awan (Cloud Computing). Proyek akademik berorientasi pada Typescript, PostgreSQL, dan implementasi best practice CI/CD."
+
+4. Page 3: Keahlian Arsitektur (My Services)Ganti "Services" biasa menjadi "Nilai Jual Arsitektur".Ikon & JudulKonten Baru (Keahlian)<i class="bx bx-code-alt"></i> Web DevelopmentFullstack (Real-Time)<i class="bx bxs-paint"></i> Creative DesignPlatform Engineering (DevOps)<i class="bx bx-bar-chart-alt"></i> Digital MarketingBackend & API Design<i class="bx bx-search"></i> SEOTypescript & Quality Assurance
+
+5. Page 4: Keahlian Teknis (My Skills)Ini harus match 100% dengan keywords yang di-highlight oleh sistem (seperti di gambar image_19d467.png).KategoriKonten Span (Diurutkan berdasarkan kepentingan)Front-EndReact Js (Wajib), Angular (Wajib), Vue.js, Next.js, Typescript (Wajib), JavaScript, HTML5/CSS3.Back-EndNode JS (Wajib), Python (Wajib), Golang, PHP (Laravel), REST API, Socket.io (WebSockets).DatabasePostgreSQL (Wajib), MySQL, MongoDB, Redis, Data Modeling.DevOps/CloudAWS (Wajib), Docker, Terraform (IaaC), Ansible, CI/CD (GitHub Actions), Git.
+
+6. Page 5: Proyek Unggulan (Latest Project)
+Elemen HTML: <h1>Latest Project</h1>
+Konten Baru: <h1>Proyek Unggulan: Transactional Logic & Scalability</h1>
+
+Elemen HTML: <h3>Project Name</h3>
+Konten Baru: Sistem Manajemen Inventaris & Order Picking
+
+Elemen HTML: Tech Used:
+Konten Baru: Tech Used: Node.js (Express) | React.js | Prisma ORM | MySQL | JWT 
+
+Deskripsi Proyek (The Pitch)
+Bagian	Konten Strategis untuk Portfolio (Ganti <p>... lo)	Bukti Code Lo
+Arsitektur & Scope	"Sebuah sistem mission-critical yang dirancang untuk mengelola stok gudang dan proses picking pesanan. Fokus pada integritas data, scalability, dan role-based access control (RBAC)."	inventaris-backend/src/controllers/authController.js, src/middleware/authMiddleware.js
+Logic & Integrity	"Menangani logika bisnis yang kompleks (seperti fitur Barang Masuk, Picking Order, dan Histori Pesanan). Menggunakan Database Transactions (via Prisma) untuk memastikan pembaruan stok (stock decrement) dan status pesanan terjadi secara atomic dan reliable."	inventaris-backend/src/controllers/orderController.js (completeOrderPicking), inventaris-backend/src/controllers/barangMasukController.js.
+Frontend & UX	Dibangun dengan React dan Bootstrap untuk UI yang responsif. Menggunakan Context API untuk manajemen sesi user yang aman dan Animated Logout Button untuk user experience yang unik.	inventaris-frontend/src/context/AuthContext.jsx, inventaris-frontend/src/components/AnimatedLogoutButton.jsx.
+
+7. Page 6: Contact Me!
+Pastikan form ini terkoneksi dengan Backend lo yang baru.
+
+Contact Box: (Biarkan tampilan form sama)
+
+Fungsi: Saat tombol "Send Message" diklik, data form akan di-post ke API Backend lo (/api/contact) dan tersimpan di PostgreSQL. Ini membuktikan form ini fungsional dan backend lo live.
