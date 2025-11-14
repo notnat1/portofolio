@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import cors from 'cors';
 import { Queries } from './database/queries';
 import { Middleware } from './middleware';
 import { makeHealthRoutes } from './routes/health';
@@ -14,6 +15,7 @@ export interface AppContext {
 export function makeApp(ctx: AppContext): Express {
   const app = express();
   app.use(express.json());
+  app.use(cors());
   app.use(express.static('public'));
   app.use(ctx.middleware.logger);
 
