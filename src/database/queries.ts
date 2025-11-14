@@ -8,6 +8,7 @@ export interface Queries {
   getAllPeople(): Promise<Person[]>;
   addPerson(person: Person): Promise<Person>;
   getAllProjects(): Promise<Project[]>;
+  addProject(project: Omit<Project, 'id'>): Promise<Project>; // Add this line
   addContactMessage(message: Omit<ContactMessage, 'id'>): Promise<ContactMessage>;
 }
 
@@ -22,6 +23,31 @@ export const makeQueries = (databaseUrl: string): Queries => {
       } catch {
         return false;
       }
+    },
+    addProject: async ({ name, description, image_url, project_url, source_code_url, tech_used }) => {
+        const [result] = await pool.execute<ResultSetHeader>(
+            `
+            INSERT INTO projects (name, description, image_url, project_url, source_code_url, tech_used)
+            VALUES (?, ?, ?, ?, ?, ?)
+            `,
+            [name, description, image_url, project_url, source_code_url, tech_used],
+        );
+
+        if (result.affectedRows !== 1) {
+            throw new HttpError(500, 'Something went wrong');
+        }
+        
+        const insertId = result.insertId;
+        const [rows] = await pool.query<Project[] & RowDataPacket[]>(
+            `
+            SELECT id, name, description, image_url, project_url, source_code_url, tech_used
+            FROM projects
+            WHERE id = ?
+            `,
+            [insertId]
+        );
+
+        return rows[0];
     },
     getAllPeople: async () => {
       const [rows] = await pool.query<Person[] & RowDataPacket[]>(
@@ -50,7 +76,14 @@ export const makeQueries = (databaseUrl: string): Queries => {
     getAllProjects: async () => {
       const [rows] = await pool.query<Project[] & RowDataPacket[]>(
         `
-        SELECT id, name, description, image_url, project_url, source_code_url, tech_used
+        SELECT 
+          id, 
+          name AS title, 
+          description, 
+          image_url, 
+          project_url AS live_url, 
+          source_code_url AS github_url, 
+          tech_used AS tech_stack
         FROM projects
         `,
       );

@@ -522,8 +522,22 @@ class AutoDriver {
   }
 }
 
+interface ShaderPassProps {
+  material?: {
+    vertexShader: string;
+    fragmentShader: string;
+    uniforms: Uniforms;
+    blending?: THREE.Blending;
+    depthWrite?: boolean;
+    transparent?: boolean;
+  };
+  output?: THREE.WebGLRenderTarget | null;
+  output0?: THREE.WebGLRenderTarget | null;
+  output1?: THREE.WebGLRenderTarget | null;
+}
+
 class ShaderPass {
-  props: any;
+  props: ShaderPassProps;
   uniforms?: Uniforms;
   scene: THREE.Scene | null = null;
   camera: THREE.Camera | null = null;
@@ -532,12 +546,12 @@ class ShaderPass {
   plane: THREE.Mesh | null = null;
   Common: CommonClass; // Added CommonClass instance
 
-  constructor(props: any, common: CommonClass) {
+  constructor(props: ShaderPassProps, common: CommonClass) {
     this.props = props || {};
     this.uniforms = this.props.material?.uniforms;
     this.Common = common; // Store CommonClass instance
   }
-  init(..._args: any[]) {
+  init() {
     this.scene = new THREE.Scene();
     this.camera = new THREE.Camera();
     if (this.uniforms) {
@@ -547,7 +561,7 @@ class ShaderPass {
       this.scene.add(this.plane);
     }
   }
-  update(..._args: any[]) {
+  update() {
     if (!this.Common.renderer || !this.scene || !this.camera) return;
     this.Common.renderer.setRenderTarget(this.props.output || null);
     this.Common.renderer.render(this.scene, this.camera);
@@ -557,7 +571,7 @@ class ShaderPass {
 
 class Advection extends ShaderPass {
   line!: THREE.LineSegments;
-  constructor(simProps: any, common: CommonClass) { // Pass common
+  constructor(simProps: { cellScale: THREE.Vector2; fboSize: THREE.Vector2; dt: number; src: THREE.WebGLRenderTarget | null; dst: THREE.WebGLRenderTarget | null }, common: CommonClass) { // Pass common
     super({
       material: {
         vertexShader: face_vert,
@@ -566,14 +580,14 @@ class Advection extends ShaderPass {
           boundarySpace: { value: simProps.cellScale },
           px: { value: simProps.cellScale },
           fboSize: { value: simProps.fboSize },
-          velocity: { value: simProps.src.texture },
+          velocity: { value: simProps.src?.texture },
           dt: { value: simProps.dt },
           isBFECC: { value: true }
         }
       },
       output: simProps.dst
     }, common); // Pass common to super
-    this.uniforms = this.props.material.uniforms;
+    this.uniforms = this.props.material?.uniforms;
     this.init();
   }
   init() {
@@ -594,8 +608,8 @@ class Advection extends ShaderPass {
     this.line = new THREE.LineSegments(boundaryG, boundaryM);
     this.scene!.add(this.line);
   }
-  update(...args: any[]) {
-    const { dt, isBounce, BFECC } = (args[0] || {}) as { dt?: number; isBounce?: boolean; BFECC?: boolean };
+  update(options: { dt?: number; isBounce?: boolean; BFECC?: boolean }) {
+    const { dt, isBounce, BFECC } = options;
     if (!this.uniforms) return;
     if (typeof dt === 'number') this.uniforms.dt.value = dt;
     if (typeof isBounce === 'boolean') this.line.visible = isBounce;
@@ -607,7 +621,7 @@ class Advection extends ShaderPass {
 class ExternalForce extends ShaderPass {
   mouse!: THREE.Mesh;
   Mouse: MouseClass; // Added MouseClass instance
-  constructor(simProps: any, common: CommonClass, mouse: MouseClass) { // Pass common and mouse
+  constructor(simProps: { cellScale: THREE.Vector2; cursor_size: number; dst: THREE.WebGLRenderTarget | null }, common: CommonClass, mouse: MouseClass) { // Pass common and mouse
     super({ output: simProps.dst }, common); // Pass common to super
     this.Mouse = mouse; // Store MouseClass instance
     this.init(simProps);
@@ -630,8 +644,7 @@ class ExternalForce extends ShaderPass {
     this.mouse = new THREE.Mesh(mouseG, mouseM);
     this.scene!.add(this.mouse);
   }
-  update(...args: any[]) {
-    const props = args[0] || {};
+  update(props: { mouse_force?: number; cellScale?: { x: number; y: number }; cursor_size?: number }) {
     const forceX = (this.Mouse.diff.x / 2) * (props.mouse_force || 0);
     const forceY = (this.Mouse.diff.y / 2) * (props.mouse_force || 0);
     const cellScale = props.cellScale || { x: 1, y: 1 };
@@ -655,15 +668,15 @@ class ExternalForce extends ShaderPass {
 }
 
 class Viscous extends ShaderPass {
-  constructor(simProps: any, common: CommonClass) { // Pass common
+  constructor(simProps: { cellScale: THREE.Vector2; boundarySpace: THREE.Vector2; viscous: number; src: THREE.WebGLRenderTarget | null; dst: THREE.WebGLRenderTarget | null; dst_: THREE.WebGLRenderTarget | null; dt: number }, common: CommonClass) { // Pass common
     super({
       material: {
         vertexShader: face_vert,
         fragmentShader: viscous_frag,
         uniforms: {
           boundarySpace: { value: simProps.boundarySpace },
-          velocity: { value: simProps.src.texture },
-          velocity_new: { value: simProps.dst_.texture },
+          velocity: { value: simProps.src?.texture },
+          velocity_new: { value: simProps.dst_?.texture },
           v: { value: simProps.viscous },
           px: { value: simProps.cellScale },
           dt: { value: simProps.dt }
@@ -675,10 +688,10 @@ class Viscous extends ShaderPass {
     }, common); // Pass common to super
     this.init();
   }
-  update(...args: any[]) {
-    const { viscous, iterations, dt } = (args[0] || {}) as { viscous?: number; iterations?: number; dt?: number };
+  update(options: { viscous?: number; iterations?: number; dt?: number }) {
+    const { viscous, iterations, dt } = options;
     if (!this.uniforms) return;
-    let fbo_in: any, fbo_out: any;
+    let fbo_in: THREE.WebGLRenderTarget | null, fbo_out: THREE.WebGLRenderTarget | null;
     if (typeof viscous === 'number') this.uniforms.v.value = viscous;
     const iter = iterations ?? 0;
     for (let i = 0; i < iter; i++) {
@@ -699,14 +712,14 @@ class Viscous extends ShaderPass {
 }
 
 class Divergence extends ShaderPass {
-  constructor(simProps: any, common: CommonClass) { // Pass common
+  constructor(simProps: { cellScale: THREE.Vector2; boundarySpace: THREE.Vector2; src: THREE.WebGLRenderTarget | null; dst: THREE.WebGLRenderTarget | null; dt: number }, common: CommonClass) { // Pass common
     super({
       material: {
         vertexShader: face_vert,
         fragmentShader: divergence_frag,
         uniforms: {
           boundarySpace: { value: simProps.boundarySpace },
-          velocity: { value: simProps.src.texture },
+          velocity: { value: simProps.src?.texture },
           px: { value: simProps.cellScale },
           dt: { value: simProps.dt }
         }
@@ -715,8 +728,8 @@ class Divergence extends ShaderPass {
     }, common); // Pass common to super
     this.init();
   }
-  update(...args: any[]) {
-    const { vel } = (args[0] || {}) as { vel?: any };
+  update(options: { vel?: { texture: THREE.Texture } }) {
+    const { vel } = options;
     if (this.uniforms && vel) {
       this.uniforms.velocity.value = vel.texture;
     }
@@ -725,15 +738,15 @@ class Divergence extends ShaderPass {
 }
 
 class Poisson extends ShaderPass {
-  constructor(simProps: any, common: CommonClass) { // Pass common
+  constructor(simProps: { cellScale: THREE.Vector2; boundarySpace: THREE.Vector2; src: THREE.WebGLRenderTarget | null; dst: THREE.WebGLRenderTarget | null; dst_: THREE.WebGLRenderTarget | null }, common: CommonClass) { // Pass common
     super({
       material: {
         vertexShader: face_vert,
         fragmentShader: poisson_frag,
         uniforms: {
           boundarySpace: { value: simProps.boundarySpace },
-          pressure: { value: simProps.dst_.texture },
-          divergence: { value: simProps.src.texture },
+          pressure: { value: simProps.dst_?.texture },
+          divergence: { value: simProps.src?.texture },
           px: { value: simProps.cellScale }
         }
       },
@@ -743,9 +756,9 @@ class Poisson extends ShaderPass {
     }, common); // Pass common to super
     this.init();
   }
-  update(...args: any[]) {
-    const { iterations } = (args[0] || {}) as { iterations?: number };
-    let p_in: any, p_out: any;
+  update(options: { iterations?: number }) {
+    const { iterations } = options;
+    let p_in: THREE.WebGLRenderTarget | null, p_out: THREE.WebGLRenderTarget | null;
     const iter = iterations ?? 0;
     for (let i = 0; i < iter; i++) {
       if (i % 2 === 0) {
@@ -764,15 +777,15 @@ class Poisson extends ShaderPass {
 }
 
 class Pressure extends ShaderPass {
-  constructor(simProps: any, common: CommonClass) { // Pass common
+  constructor(simProps: { cellScale: THREE.Vector2; boundarySpace: THREE.Vector2; src_p: THREE.WebGLRenderTarget | null; src_v: THREE.WebGLRenderTarget | null; dst: THREE.WebGLRenderTarget | null; dt: number }, common: CommonClass) { // Pass common
     super({
       material: {
         vertexShader: face_vert,
         fragmentShader: pressure_frag,
         uniforms: {
           boundarySpace: { value: simProps.boundarySpace },
-          pressure: { value: simProps.src_p.texture },
-          velocity: { value: simProps.src_v.texture },
+          pressure: { value: simProps.src_p?.texture },
+          velocity: { value: simProps.src_v?.texture },
           px: { value: simProps.cellScale },
           dt: { value: simProps.dt }
         }
@@ -781,8 +794,8 @@ class Pressure extends ShaderPass {
     }, common); // Pass common to super
     this.init();
   }
-  update(...args: any[]) {
-    const { vel, pressure } = (args[0] || {}) as { vel?: any; pressure?: any };
+  update(options: { vel?: { texture: THREE.Texture }; pressure?: { texture: THREE.Texture } }) {
+    const { vel, pressure } = options;
     if (this.uniforms && vel && pressure) {
       this.uniforms.velocity.value = vel.texture;
       this.uniforms.pressure.value = pressure.texture;
@@ -922,7 +935,7 @@ class Simulation {
       mouse_force: this.options.mouse_force,
       cellScale: this.cellScale
     });
-    let vel: any = this.fbos.vel_1;
+    let vel: THREE.WebGLRenderTarget | null = this.fbos.vel_1;
     if (this.options.isViscous) {
       vel = this.viscous.update({
         viscous: this.options.viscous,
@@ -979,8 +992,18 @@ class Output {
   }
 }
 
+interface WebGLManagerProps {
+  $wrapper: HTMLElement;
+  autoDemo: boolean;
+  autoSpeed: number;
+  autoIntensity: number;
+  takeoverDuration: number;
+  autoResumeDelay: number;
+  autoRampDuration: number;
+}
+
 class WebGLManager implements LiquidEtherWebGL {
-  props: any;
+  props: WebGLManagerProps;
   output!: Output;
   autoDriver?: AutoDriver;
   lastUserInteraction = performance.now();
@@ -990,7 +1013,7 @@ class WebGLManager implements LiquidEtherWebGL {
   private _loop = this.loop.bind(this);
   private _resize = this.resize.bind(this);
   private _onVisibility?: () => void;
-  constructor(props: any, common: CommonClass, mouse: MouseClass, paletteTex: THREE.DataTexture) { // Accept common, mouse, paletteTex
+  constructor(props: WebGLManagerProps, common: CommonClass, mouse: MouseClass, paletteTex: THREE.DataTexture) { // Accept common, mouse, paletteTex
     this.props = props;
     this.Common = common;
     this.Mouse = mouse;
@@ -1002,7 +1025,7 @@ class WebGLManager implements LiquidEtherWebGL {
       this.lastUserInteraction = performance.now();
       if (this.autoDriver) this.autoDriver.forceStop();
     };
-    this.autoDriver = new AutoDriver(this.Mouse, this as any, {
+    this.autoDriver = new AutoDriver(this.Mouse, this, {
       enabled: props.autoDemo,
       speed: props.autoSpeed,
       resumeDelay: props.autoResumeDelay,
