@@ -62,3 +62,21 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+@layer utilities {
+  @keyframes animate-text-gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  .animate-text {
+    background-size: 200% 200%;
+    animation: animate-text-gradient 5s ease infinite;
+  }
+}

@@ -1,0 +1,46 @@
+Pengalaman Pengguna
+Aplikasi Web
+Otomatisasi
+Sistem Git
+AWS
+Basis Data
+Pemrograman Golang
+Systems Architecture
+Memecahkan Masalah
+Problem Solving
+Software Development
+Git
+Bahasa SQL
+Mongo Db
+Database MySQL
+Tailwind CSS
+Bootstrap Css3
+HTML5
+Typescript Programming
+Pemrograman JavaScript
+Vue.JS
+Angular
+Next.JS
+React.JS
+API Development
+Rest API
+Django
+Pemrograman Python
+Golang
+Express.JS
+Node.JS
+Filament
+Laravel Livewire Framework
+Laravel Framework
+Pemrograman PHP
+Fullstack Web Development
+Full Stack Development
+Terraform
+Komputasi Awan
+Docker
+Github Action
+Infrastructure as Code
+Jenkins Software
+CI/CD
+DevOps
+Bekerja Sama Tim
