@@ -41,10 +41,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                // Menggunakan variabel ${env.WORKSPACE} untuk path yang dinamis dan benar
+                // Deploy Frontend
                 sh "sudo /usr/bin/rsync -av --delete ${env.WORKSPACE}/client/dist/ /var/www/portofolio.natte.site/"
                 sh 'sudo /usr/bin/chown -R www-data:www-data /var/www/portofolio.natte.site/'
-                sh 'sudo /usr/sbin/systemctl reload nginx'
+                // FIX: Correct path for systemctl
+                sh 'sudo /bin/systemctl reload nginx'
 
                 // Deploy Backend (Docker Compose)
                 sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down"
