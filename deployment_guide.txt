@@ -1,0 +1,174 @@
+Berikut adalah panduan langkah demi langkah untuk mendeploy aplikasi Anda ke VPS:
+
+**Kondisi Saat Ini:**
+*   VPS Anda sudah terinstall Git, Docker, Docker Compose, Nginx, dan UFW.
+*   Repositori proyek Anda sudah di-clone ke `/home/natte/portofolio`.
+*   File `package.json` di root sudah dimodifikasi (script `build` menjadi `tsc`, dan script `start` ditambahkan).
+*   File `.env` di root sudah dibuat dengan `PORT=3001` dan `DATABASE_URL` yang berisi password database yang aman.
+
+---
+
+### **Langkah 1: Update `docker-compose.yml`**
+
+Anda perlu menambahkan service untuk backend aplikasi Anda ke file `docker-compose.yml`.
+
+1.  **Buka file `docker-compose.yml` untuk diedit:**
+    ```bash
+    nano /home/natte/portofolio/docker-compose.yml
+    ```
+2.  **Tambahkan service `backend` ini** di bawah `services:` dan sejajar dengan `postgres-dev` dan `postgres-test`. Pastikan indentasinya benar (2 spasi).
+
+    ```yaml
+    services:
+      backend:
+        build: .
+        ports:
+          - "3001:3001" # Memetakan port 3001 container ke port 3001 host
+        env_file:
+          - ./.env
+        depends_on:
+          - postgres-dev
+        restart: always
+      postgres-dev:
+        image: postgres:17
+        restart: always
+        environment:
+          POSTGRES_DB: api_dev
+          POSTGRES_USER: api
+          POSTGRES_PASSWORD: password # Ini akan di-override oleh .env jika ada
+        ports:
+          - 4329:5432
+      postgres-test:
+        image: postgres:17
+        restart: always
+        environment:
+          POSTGRES_DB: api_test
+          POSTGRES_USER: api
+          POSTGRES_PASSWORD: password
+        ports:
+          - 4328:5432
+    ```
+    *(Catatan: Password `postgres-dev` di `docker-compose.yml` akan di-override oleh password yang sudah saya masukkan di file `.env` Anda.)*
+
+3.  **Simpan dan keluar** dari editor (di `nano`, tekan `Ctrl+X`, lalu `Y`, lalu `Enter`).
+
+---
+
+### **Langkah 2: Build Aplikasi Frontend**
+
+Sekarang, kita akan membangun aplikasi React frontend Anda.
+
+1.  **Masuk ke direktori frontend:**
+    ```bash
+    cd /home/natte/portofolio/client
+    ```
+2.  **Install dependensi frontend (termasuk devDependencies):**
+    ```bash
+    npm install --dev
+    ```
+3.  **Build aplikasi frontend:**
+    ```bash
+    npm run build
+    ```
+    Ini akan membuat folder `dist` di dalam `/home/natte/portofolio/client` yang berisi file-file statis frontend Anda.
+
+---
+
+### **Langkah 3: Jalankan Service Docker Compose**
+
+Setelah `docker-compose.yml` diperbarui dan frontend di-build, kita bisa menjalankan semua service Docker.
+
+1.  **Kembali ke direktori root proyek:**
+    ```bash
+    cd /home/natte/portofolio
+    ```
+2.  **Build dan jalankan semua service Docker:**
+    ```bash
+    docker compose up --build -d
+    ```
+    *   `--build` akan membangun ulang image Docker (termasuk backend Anda).
+    *   `-d` akan menjalankan service di background.
+    *   Aplikasi backend Anda akan otomatis menjalankan migrasi database saat pertama kali start.
+
+3.  **Verifikasi bahwa container berjalan:**
+    ```bash
+    docker ps
+    ```
+    Anda seharusnya melihat container `backend` dan `postgres-dev` berjalan.
+
+---
+
+### **Langkah 4: Konfigurasi Nginx**
+
+Nginx akan berfungsi sebagai web server untuk frontend statis Anda dan sebagai reverse proxy untuk API backend Anda.
+
+1.  **Buat dan isi file konfigurasi Nginx baru untuk domain Anda secara otomatis:**
+    ```bash
+    echo 'ignaciojanis' | sudo -S bash -c "cat << 'EOF' > /etc/nginx/sites-available/portofolio.natte.site
+server {
+    listen 80;
+    listen [::]:80;
+    server_name portofolio.natte.site;
+
+    root /home/natte/portofolio/client/dist;
+    index index.html index.htm;
+
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+
+    location /api {
+        proxy_pass http://localhost:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOF"
+    ```
+
+4.  **Aktifkan konfigurasi Nginx baru:**
+    ```bash
+    echo 'ignaciojanis' | sudo -S ln -s /etc/nginx/sites-available/portofolio.natte.site /etc/nginx/sites-enabled/
+    ```
+
+5.  **Uji konfigurasi Nginx untuk kesalahan:**
+    ```bash
+    echo 'ignaciojanis' | sudo -S nginx -t
+    ```
+    Anda seharusnya melihat `test is successful`.
+
+6.  **Muat ulang Nginx untuk menerapkan perubahan:**
+    ```bash
+    echo 'ignaciojanis' | sudo -S systemctl reload nginx
+    ```
+
+---
+
+### **Langkah 5: Setup SSL dengan Certbot (HTTPS)**
+
+Ini akan mengamankan situs Anda dengan sertifikat SSL gratis dari Let's Encrypt.
+
+1.  **Install Certbot dan plugin Nginx-nya:**
+    ```bash
+    echo 'ignaciojanis' | sudo -S apt install -y certbot python3-certbot-nginx
+    ```
+2.  **Jalankan Certbot secara non-interaktif:**
+    ```bash
+    echo 'ignaciojanis' | sudo -S certbot --nginx --non-interactive --agree-tos --email natteishere11@gmail.com --redirect -d portofolio.natte.site
+    ```
+    *   Perintah ini akan otomatis menyetujui persyaratan, menggunakan email Anda, dan mengaktifkan redirect ke HTTPS.
+
+---
+
+### **Langkah 6: Verifikasi Deployment**
+
+Setelah semua langkah di atas selesai, buka browser Anda dan navigasikan ke:
+`https://portofolio.natte.site`
+
+Aplikasi Anda seharusnya sudah berjalan dan dapat diakses.
+
+---
+Jika Anda memiliki pertanyaan atau mengalami masalah di salah satu langkah ini, jangan ragu untuk bertanya.

@@ -1,0 +1,6 @@
+Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
+index-WM7q_T1R.js:4242 Gagal fetch projects (Backend mungkin belum nyala): xt
+(anonymous) @ index-WM7q_T1R.js:4242Understand this error
+localhost:3001/api/projects:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
+localhost:3001/socket.io/?EIO=4&transport=polling&t=4yfqtuz0:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
+index-WM7q_T1R.js:13  GET http://localhost:3001/socket.io/?EIO=4&transport=polling&t=4yj298d8 net::ERR_CONNECTION_REFUSED

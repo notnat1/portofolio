@@ -1,0 +1,60 @@
+Berikut adalah langkah-langkah untuk memperbaiki masalah database dan me-restart aplikasi Anda:
+
+**Langkah 1: Di Komputer Lokal Anda (PowerShell)**
+
+Jalankan perintah-perintah ini untuk menyimpan perubahan konfigurasi database (`.env` dan `docker-compose.yml`) ke GitHub.
+
+1.  **Tambahkan perubahan ke Git:**
+    ```powershell
+    git add .env docker-compose.yml
+    ```
+2.  **Buat commit untuk perubahan tersebut:**
+    ```powershell
+    git commit -m "feat: switch database from postgres to mysql"
+    ```
+3.  **Unggah (push) perubahan ke GitHub:**
+    ```powershell
+    git push origin main
+    ```
+
+---
+
+**Langkah 2: Di VPS Anda (via SSH)**
+
+Setelah `push` dari komputer lokal berhasil, jalankan perintah ini di VPS Anda.
+
+1.  **Tarik (pull) perubahan terbaru dari GitHub:**
+    ```bash
+    cd /home/natte/portofolio && git pull origin main
+    ```
+
+---
+
+**Langkah 3: Bangun Ulang dan Restart Service di VPS**
+
+Sekarang kita akan membangun ulang container dengan konfigurasi MySQL yang baru.
+
+1.  **Masuk ke direktori proyek:**
+    ```bash
+    cd /home/natte/portofolio
+    ```
+2.  **Hentikan, bangun ulang, dan jalankan kembali service Anda:**
+    ```bash
+    docker compose up --build -d --force-recreate
+    ```
+    *   `--force-recreate` penting untuk memastikan container database yang lama (PostgreSQL) dihapus dan yang baru (MySQL) dibuat.
+
+---
+
+**Langkah 4: Verifikasi**
+
+Setelah perintah di atas selesai, tunggu sekitar satu menit agar database dan backend sempat menyala, lalu:
+
+1.  **Periksa kembali log backend:**
+    ```bash
+    docker logs portofolio-backend-1
+    ```
+    Seharusnya kali ini tidak ada error koneksi database. Anda mungkin akan melihat pesan bahwa server berjalan di port 3001.
+
+2.  **Coba akses situs Anda lagi:**
+    Buka browser dan navigasikan ke `https://portofolio.natte.site`.

@@ -1,0 +1,246 @@
+natte@vmi2909733:~/portofolio$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS              PORTS                                                    NAMES
+65365ea8ad47   portofolio-backend   "docker-entrypoint.s…"   6 minutes ago   Up About a minute   0.0.0.0:3001->3001/tcp, [::]:3001->3001/tcp              portofolio-backend-1
+9747d7fcd095   mysql:8              "docker-entrypoint.s…"   6 minutes ago   Up About a minute   33060/tcp, 0.0.0.0:4329->3306/tcp, [::]:4329->3306/tcp   portofolio-mysql-dev-1
+a4d5cfd4ebba   mysql:8              "docker-entrypoint.s…"   6 minutes ago   Up About a minute   33060/tcp, 0.0.0.0:4328->3306/tcp, [::]:4328->3306/tcp   portofolio-mysql-test-1
+natte@vmi2909733:~/portofolio$
+natte@vmi2909733:~/portofolio$ docker logs portofolio-backend-1
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Applied migration: 1681229663482_create-tables.sql
+Applied migration: 1731582000000_add-portfolio-tables.sql
+Applied migration: 1731582000001_seed-projects-table.sql
+{"level":30,"time":1763197102040,"pid":19,"hostname":"65365ea8ad47","msg":"Server is up on port 3001"}
+npm error path /app
+npm error command failed
+npm error signal SIGTERM
+npm error command sh -c node dist/index.js
+npm error A complete log of this run can be found in: /root/.npm/_logs/2025-11-15T08_58_21_306Z-debug-0.log
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+{"level":30,"time":1763197230475,"pid":19,"hostname":"65365ea8ad47","msg":"Server is up on port 3001"}
+npm error path /app
+npm error command failed
+npm error signal SIGTERM
+npm error command sh -c node dist/index.js
+npm error A complete log of this run can be found in: /root/.npm/_logs/2025-11-15T09_00_29_934Z-debug-0.log
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.3:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.3:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+{"level":30,"time":1763197391286,"pid":19,"hostname":"65365ea8ad47","msg":"Server is up on port 3001"}
+natte@vmi2909733:~/portofolio$

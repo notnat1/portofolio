@@ -1,0 +1,5 @@
+echo 'ignaciojanis' | sudo -S bash -c "
+sed -i 's|root /home/natte/portofolio/client/dist;|root /var/www/portofolio.natte.site;|g' /etc/nginx/sites-available/portofolio.natte.site && \
+nginx -t && \
+systemctl restart nginx
+"

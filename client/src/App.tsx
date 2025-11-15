@@ -31,20 +31,20 @@ import { // Import react-icons
 } from 'react-icons/si';
 
 // --- (1) KONEKSI KE BACKEND ---
-const API_URL = 'http://localhost:3001/api';
-const SOCKET_URL = 'http://localhost:3001';
+const API_URL = '/api';
+const SOCKET_URL = '/';
 
 const socket = io(SOCKET_URL);
 
 // --- (2) DEFINISI TIPE DATA ---
 interface IProject {
   id: number;
-  name: string; // Changed from title
+  title: string;
   description: string;
-  image_url: string; // Changed from image_src
-  project_url: string; // Changed from live_url
-  source_code_url: string; // Changed from github_url
-  tech_used: string; // Changed from tech_stack
+  image_url: string;
+  live_url: string;
+  github_url: string;
+  tech_stack: string;
 }
 
 interface IContactForm {
@@ -216,7 +216,7 @@ const App = () => {
         <header className={`sticky top-0 z-50 w-full bg-black bg-opacity-80 backdrop-blur-md border-b border-gray-800 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
           <nav className="flex items-center justify-between max-w-6xl px-4 mx-auto">
             <a href="#" className={`font-bold text-gray-100 hover:text-gray-300 transition-colors ${isScrolled ? 'text-xl' : 'text-2xl'}`}>
-              Nat.dev
+              NATTE TECH
             </a>
             {/* Desktop Navigation */}
             <div className={`hidden md:flex space-x-6 text-lg transition-all duration-300`}>
@@ -242,10 +242,6 @@ const App = () => {
 
           {/* --- HERO SECTION --- */}
           <section id="hero" className="py-24 text-center md:py-32">
-            
-            <div className="inline-block px-5 py-2 mb-8 font-medium text-green-300 bg-green-800 bg-opacity-50 border border-green-700 rounded-full shadow-lg">
-              🟢 {onlineCount} Visitors Online Now (Real-Time Proof)
-            </div>
 
             <h1 className="mb-6 text-5xl font-extrabold md:text-7xl">
               Nathanael Ignacio Janis
@@ -349,15 +345,15 @@ const App = () => {
                 // Looping data dari state projects
                 projects.map((project) => (
                   <GlareHover key={project.id} className="overflow-hidden transition-all duration-300 bg-gray-900 border border-gray-700 shadow-2xl bg-opacity-70 rounded-2xl group hover:border-blue-500 hover:shadow-blue-500/20">
-                    <img src={project.image_url} alt={project.name} className="object-cover w-full h-56 transition-transform duration-300 group-hover:scale-105"/>
+                    <img src={project.image_url} alt={project.title} className="object-cover w-full h-56 transition-transform duration-300 group-hover:scale-105"/>
                     <div className="p-8">
-                      <h3 className="mb-3 text-2xl font-bold">{project.name}</h3>
+                      <h3 className="mb-3 text-2xl font-bold">{project.title}</h3>
                       <p className="mb-5 text-gray-400">{project.description}</p>
-                      <p className="mb-6 text-sm font-semibold text-blue-300">Tech: {project.tech_used}</p>
+                      <p className="mb-6 text-sm font-semibold text-blue-300">Tech: {project.tech_stack}</p>
                       <div className="flex space-x-4">
-                        <a href={project.source_code_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-gray-700 rounded-lg hover:bg-gray-600">Source Code</a>
-                        {project.project_url && ( // Only show Live Demo if URL exists
-                          <a href={project.project_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-500">Live Demo</a>
+                        <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-gray-700 rounded-lg hover:bg-gray-600">Source Code</a>
+                        {project.live_url && ( // Only show Live Demo if URL exists
+                          <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-500">Live Demo</a>
                         )}
                       </div>
                     </div>
