@@ -47,12 +47,10 @@ pipeline {
                 sh 'sudo /bin/systemctl reload nginx'
 
                 // Deploy Backend (Docker Compose)
-                echo 'FORCE-KILLING any process on conflicting ports...'
-                // Menemukan dan membunuh proses di port 4329 dan 4238. '|| true' untuk mencegah error jika tidak ada proses yang ditemukan.
-                sh "sudo kill -9 \$(sudo lsof -t -i:4329) || true"
-                sh "sudo kill -9 \$(sudo lsof -t -i:4328) || true"
-
-                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down --remove-orphans"
+                echo 'Tearing down all old services and volumes...'
+                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down -v --remove-orphans"
+                
+                echo 'Starting new services...'
                 sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose up -d --build backend"
             }
         }
