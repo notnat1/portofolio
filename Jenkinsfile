@@ -47,12 +47,12 @@ pipeline {
                 sh 'sudo /bin/systemctl reload nginx'
 
                 // Deploy Backend (Docker Compose)
-                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down --remove-orphans"
-                
-                // FIX: Add a delay to allow the OS to release the ports
-                echo 'Waiting for 5 seconds for ports to be released...'
-                sh 'sleep 5'
+                echo 'FORCE-KILLING any process on conflicting ports...'
+                // Menemukan dan membunuh proses di port 4329 dan 4238. '|| true' untuk mencegah error jika tidak ada proses yang ditemukan.
+                sh "sudo kill -9 \$(sudo lsof -t -i:4329) || true"
+                sh "sudo kill -9 \$(sudo lsof -t -i:4328) || true"
 
+                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down --remove-orphans"
                 sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose up -d --build backend"
             }
         }
