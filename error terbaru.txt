@@ -1,6 +1,11 @@
-Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
-index-WM7q_T1R.js:4242 Gagal fetch projects (Backend mungkin belum nyala): xt
-(anonymous) @ index-WM7q_T1R.js:4242Understand this error
-localhost:3001/api/projects:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
-localhost:3001/socket.io/?EIO=4&transport=polling&t=4yfqtuz0:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
-index-WM7q_T1R.js:13  GET http://localhost:3001/socket.io/?EIO=4&transport=polling&t=4yj298d8 net::ERR_CONNECTION_REFUSED
+natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uroot -p'root_password_change_me' -e "DROP USER IF EXISTS 'api'@'localhost'; CREATE USER 'api'@'localhost' IDENTIFIED BY '8T1k3u2w8kqj+FXfpMytoQ=='; GRANT ALL PRIVILEGES ON api_dev.* TO 'api'@'localhost'; FLUSH PRIVILEGES;"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+natte@vmi2909733:~$
+natte@vmi2909733:~$
+natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uroot -p'root_password_change_me' -e "DROP USER IF EXISTS 'api'@'localhost'; CREATE USER 'api'@'localhost' IDENTIFIED BY '8T1k3u2w8kqj+FXfpMytoQ=='; GRANT ALL PRIVILEGES ON api_dev.* TO 'api'@'localhost'; FLUSH PRIVILEGES;"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+natte@vmi2909733:~$
+natte@vmi2909733:~$
+natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S bash -c "docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uapi -p'8T1k3u2w8kqj+FXfpMytoQ==' api_dev -e \"UPDATE projects SET image_url = 'images/halaman Dashboard admin panel website inventory.png', source_code_url = 'https://github.com/notnat1/website-order-picking.git' WHERE id = 1;\""
+mysql: [Warning] Using a password on the command line interface can be insecure.
+natte@vmi2909733:~$
