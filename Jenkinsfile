@@ -9,7 +9,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out code from GitHub...'
-                // Menggunakan credential 'github-ssh-key' yang sudah kita buat
                 git credentialsId: 'github-ssh-key', url: 'git@github.com:notnat1/portofolio.git', branch: 'main'
             }
         }
@@ -39,10 +38,18 @@ pipeline {
             }
         }
 
-        stage('Deploy (Placeholder)') {
+        stage('Deploy') {
             steps {
-                echo 'Deployment will be configured in the next step.'
-                echo 'This stage is a placeholder to confirm the build is working.'
+                echo 'Deploying application...'
+                // Deploy Frontend
+                sh 'sudo /usr/bin/rsync -av --delete /var/lib/jenkins/workspace/portofolio-pipeline/client/dist/ /var/www/portofolio.natte.site/'
+                sh 'sudo /usr/bin/chown -R www-data:www-data /var/www/portofolio.natte.site/'
+                sh 'sudo /usr/sbin/systemctl reload nginx' // Reload Nginx to serve new frontend
+
+                // Deploy Backend (Docker Compose)
+                // Navigate to the project root where docker-compose.yml is located
+                sh 'cd /var/lib/jenkins/workspace/portofolio-pipeline && sudo /usr/local/bin/docker-compose down'
+                sh 'cd /var/lib/jenkins/workspace/portofolio-pipeline && sudo /usr/local/bin/docker-compose up -d --build'
             }
         }
     }
@@ -50,6 +57,12 @@ pipeline {
     post {
         always {
             echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
         }
     }
 }
