@@ -1,0 +1,307 @@
+Started by user natte.dev
+Obtained Jenkinsfile from git https://github.com/notnat1/portofolio.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/portofolio-pippeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential github-ssh-key
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/portofolio-pippeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/notnat1/portofolio.git # timeout=10
+Fetching upstream changes from https://github.com/notnat1/portofolio.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_SSH to set credentials Github SSH Key for deploy
+Verifying host key using known hosts file, will automatically accept unseen keys
+ > git fetch --tags --force --progress -- https://github.com/notnat1/portofolio.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 3b8faff94d611c8bd5cb10aa9633b6727a089bc2 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 3b8faff94d611c8bd5cb10aa9633b6727a089bc2 # timeout=10
+Commit message: "ci: Use 'docker-compose down -v' for a clean deployment"
+ > git rev-list --no-walk a688f56037a49e49a7f13cfb7892abce46fa61cb # timeout=10
+[Checks API] No suitable checks publisher found.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Tool Install)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+Checking out code from GitHub...
+[Pipeline] git
+The recommended git tool is: git
+using credential github-ssh-key
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/portofolio-pippeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url git@github.com:notnat1/portofolio.git # timeout=10
+Fetching upstream changes from git@github.com:notnat1/portofolio.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_SSH to set credentials Github SSH Key for deploy
+Verifying host key using known hosts file, will automatically accept unseen keys
+ > git fetch --tags --force --progress -- git@github.com:notnat1/portofolio.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 3b8faff94d611c8bd5cb10aa9633b6727a089bc2 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 3b8faff94d611c8bd5cb10aa9633b6727a089bc2 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 3b8faff94d611c8bd5cb10aa9633b6727a089bc2 # timeout=10
+Commit message: "ci: Use 'docker-compose down -v' for a clean deployment"
+ > git rev-list --no-walk a688f56037a49e49a7f13cfb7892abce46fa61cb # timeout=10
+[Checks API] No suitable checks publisher found.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Backend Dependencies)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+Installing backend dependencies...
+[Pipeline] sh
++ npm install
+
+up to date, audited 390 packages in 1s
+
+83 packages are looking for funding
+  run `npm fund` for details
+
+1 moderate severity vulnerability
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Frontend Dependencies)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+Installing frontend dependencies...
+[Pipeline] dir
+Running in /var/lib/jenkins/workspace/portofolio-pippeline/client
+[Pipeline] {
+[Pipeline] sh
++ npm install
+
+up to date, audited 490 packages in 1s
+
+153 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Frontend)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+Building frontend...
+[Pipeline] dir
+Running in /var/lib/jenkins/workspace/portofolio-pippeline/client
+[Pipeline] {
+[Pipeline] sh
++ npm run build
+
+> portfolio-client@0.0.0 build
+> vite build
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 119 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.48 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mdist/[22m[2massets/[22m[35mindex-DcgWMGN2.css  [39m[1m[2m 21.61 kB[22m[1m[22m[2m │ gzip:   4.85 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-DKEAzAw-.js   [39m[1m[33m812.03 kB[39m[22m[2m │ gzip: 234.18 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 3.69s[39m
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+Deploying application...
+[Pipeline] sh
++ sudo /usr/bin/rsync -av --delete /var/lib/jenkins/workspace/portofolio-pippeline/client/dist/ /var/www/portofolio.natte.site/
+sending incremental file list
+./
+index.html
+logo natte.png
+vite.svg
+assets/
+assets/index-DKEAzAw-.js
+assets/index-DcgWMGN2.css
+images/
+images/Halaman Cetak Nota.png
+images/halaman Dashboard admin panel website inventory.png
+images/halaman Tugas Picking Page karyawan panel website inventory.png
+images/halaman login website inventory.png
+resumes/
+resumes/NJANIS Resume Jobstreet .pdf
+
+sent 2,460,878 bytes  received 237 bytes  4,922,230.00 bytes/sec
+total size is 2,459,358  speedup is 1.00
+[Pipeline] sh
++ sudo /usr/bin/chown -R www-data:www-data /var/www/portofolio.natte.site/
+[Pipeline] sh
++ sudo /bin/systemctl reload nginx
+[Pipeline] echo
+Tearing down all old services and volumes...
+[Pipeline] sh
++ cd /var/lib/jenkins/workspace/portofolio-pippeline
++ sudo /usr/local/bin/docker-compose down -v --remove-orphans
+ Container portofolio-pippeline-backend-1  Stopping
+ Container portofolio-pippeline-backend-1  Stopped
+ Container portofolio-pippeline-backend-1  Removing
+ Container portofolio-pippeline-backend-1  Removed
+ Container portofolio-pippeline-mysql-dev-1  Stopping
+ Container portofolio-pippeline-mysql-dev-1  Stopped
+ Container portofolio-pippeline-mysql-dev-1  Removing
+ Container portofolio-pippeline-mysql-dev-1  Removed
+ Volume portofolio-pippeline_mysql-dev-data  Removing
+ Network portofolio-pippeline_default  Removing
+ Volume portofolio-pippeline_mysql-dev-data  Removed
+ Network portofolio-pippeline_default  Removed
+[Pipeline] echo
+Starting new services...
+[Pipeline] sh
++ cd /var/lib/jenkins/workspace/portofolio-pippeline
++ sudo /usr/local/bin/docker-compose up -d --build backend
+#1 [internal] load local bake definitions
+#1 reading from stdin 577B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 339B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-slim
+#3 DONE 1.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 63B done
+#4 DONE 0.0s
+
+#5 [base 1/6] FROM docker.io/library/node:22-slim@sha256:8833056542b4e17c27154beeabbc27c3e14ddfe3fb9183f43b3adf7eb0462923
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 4.54MB 0.7s done
+#6 DONE 0.7s
+
+#7 [base 2/6] WORKDIR /app
+#7 CACHED
+
+#8 [base 3/6] COPY package*.json ./
+#8 CACHED
+
+#9 [base 4/6] RUN npm ci
+#9 CACHED
+
+#10 [base 5/6] COPY . .
+#10 DONE 3.1s
+
+#11 [base 6/6] RUN npm run build
+#11 0.288 
+#11 0.288 > template-node-express@0.0.1 build
+#11 0.288 > tsc
+#11 0.288 
+#11 DONE 2.1s
+
+#12 [stage-1 4/6] RUN npm ci --omit=dev
+#12 CACHED
+
+#13 [stage-1 5/6] COPY --from=base /app/dist ./dist
+#13 CACHED
+
+#14 [stage-1 6/6] COPY --from=base /app/migrations ./migrations
+#14 CACHED
+
+#15 exporting to image
+#15 exporting layers done
+#15 writing image sha256:5f1acaaf7f5b283e12cdbc7d3910f2ff69c2d1cfa8af549f45fd31d791265602 done
+#15 naming to docker.io/library/portofolio-pippeline-backend done
+#15 DONE 0.0s
+
+#16 resolving provenance for metadata file
+#16 DONE 0.0s
+ portofolio-pippeline-backend  Built
+ Network portofolio-pippeline_default  Creating
+ Network portofolio-pippeline_default  Created
+ Volume portofolio-pippeline_mysql-dev-data  Creating
+ Volume portofolio-pippeline_mysql-dev-data  Created
+ Container portofolio-pippeline-mysql-dev-1  Creating
+ Container portofolio-pippeline-mysql-dev-1  Created
+ Container portofolio-pippeline-backend-1  Creating
+ Container portofolio-pippeline-backend-1  Created
+ Container portofolio-pippeline-mysql-dev-1  Starting
+Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint portofolio-pippeline-mysql-dev-1 (40ff35bcd4984a284e3f6f9fc850955835d2eeea77ebb5fe1d5973537c3cad26): Bind for 0.0.0.0:4329 failed: port is already allocated
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Pipeline finished.
+[Pipeline] echo
+Deployment failed!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+[Checks API] No suitable checks publisher found.
+Finished: FAILURE

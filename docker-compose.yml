@@ -7,10 +7,10 @@ services:
       - ./.env
     depends_on:
       - mysql-dev
-    restart: always
+    restart: unless-stopped
   mysql-dev:
     image: mysql:8
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root_password_change_me 
       MYSQL_DATABASE: api_dev
@@ -22,7 +22,7 @@ services:
       - mysql-dev-data:/var/lib/mysql
   mysql-test:
     image: mysql:8
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root_password_change_me
       MYSQL_DATABASE: api_test

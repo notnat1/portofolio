@@ -46,9 +46,9 @@ pipeline {
                 sh 'sudo /usr/bin/chown -R www-data:www-data /var/www/portofolio.natte.site/'
                 sh 'sudo /bin/systemctl reload nginx'
 
-                // Deploy Backend (Docker Compose)
-                echo 'Tearing down all old services and volumes...'
-                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down -v --remove-orphans"
+                // Deploy Backend (Docker Compose) - Cleaned up commands
+                echo 'Tearing down old services...'
+                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down --remove-orphans"
                 
                 echo 'Starting new services...'
                 sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose up -d --build backend"
