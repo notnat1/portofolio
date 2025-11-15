@@ -1,19 +1,35 @@
 services:
-  postgres-dev:
-    image: postgres:17
+  backend:
+    build: .
+    ports:
+      - "3001:3001" # Memetakan port 3001 container ke port 3001 host
+    env_file:
+      - ./.env
+    depends_on:
+      - mysql-dev
+    restart: always
+  mysql-dev:
+    image: mysql:8
     restart: always
     environment:
-      POSTGRES_DB: api_dev
-      POSTGRES_USER: api
-      POSTGRES_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password_change_me 
+      MYSQL_DATABASE: api_dev
+      MYSQL_USER: api
+      MYSQL_PASSWORD: ${DB_PASSWORD} # This will be read from the .env file
     ports:
-      - 4329:5432
-  postgres-test:
-    image: postgres:17
+      - 4329:3306
+    volumes:
+      - mysql-dev-data:/var/lib/mysql
+  mysql-test:
+    image: mysql:8
     restart: always
     environment:
-      POSTGRES_DB: api_test
-      POSTGRES_USER: api
-      POSTGRES_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password_change_me
+      MYSQL_DATABASE: api_test
+      MYSQL_USER: api
+      MYSQL_PASSWORD: password
     ports:
-      - 4328:5432
+      - 4328:3306
+
+volumes:
+  mysql-dev-data:
