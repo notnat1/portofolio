@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { AppContext } from '../app';
 import { sendContactEmail } from '../services/email';
 
 export const makeContactRoutes = (ctx: AppContext) => {
   const router = Router();
 
-  router.post('/', async (req, res, next) => {
+  router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { full_name, email, message } = req.body;
 
