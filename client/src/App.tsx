@@ -48,7 +48,7 @@ interface IProject {
 }
 
 interface IContactForm {
-  name: string;
+  full_name: string;
   email: string;
   message: string;
 }
@@ -59,7 +59,7 @@ const App = () => {
   const [onlineCount, setOnlineCount] = useState<number>(0);
   const [projects, setProjects] = useState<IProject[]>([]);
   const [contactForm, setContactForm] = useState<IContactForm>({
-    name: '',
+    full_name: '',
     email: '',
     message: '',
   });
@@ -172,7 +172,7 @@ const App = () => {
     try {
       await axios.post(`${API_URL}/contact`, contactForm);
       alert("Pesan terkirim ke Database!");
-      setContactForm({ name: '', email: '', message: '' }); // Reset form
+      setContactForm({ full_name: '', email: '', message: '' }); // Reset form
     } catch (error) {
       console.error("Gagal kirim pesan:", error);
       alert("Gagal mengirim pesan.");
@@ -372,11 +372,11 @@ const App = () => {
             <h2 className="mb-12 text-4xl font-bold text-center">Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Touch</span></h2>
             <form onSubmit={handleContactSubmit} className="max-w-xl p-8 mx-auto bg-gray-900 border border-gray-700 shadow-2xl bg-opacity-70 rounded-2xl">
               <div className="mb-5">
-                <label htmlFor="name" className="block mb-2 text-lg font-medium text-gray-300">Full Name</label>
+                <label htmlFor="full_name" className="block mb-2 text-lg font-medium text-gray-300">Full Name</label>
                 <input 
-                  type="text" id="name" required
+                  type="text" id="full_name" required
                   className="w-full p-4 text-white bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={contactForm.name}
+                  value={contactForm.full_name}
                   onChange={handleFormChange}
                 />
               </div>
