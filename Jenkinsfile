@@ -44,12 +44,13 @@ pipeline {
                 // Deploy Frontend
                 sh "sudo /usr/bin/rsync -av --delete ${env.WORKSPACE}/client/dist/ /var/www/portofolio.natte.site/"
                 sh 'sudo /usr/bin/chown -R www-data:www-data /var/www/portofolio.natte.site/'
-                // FIX: Correct path for systemctl
                 sh 'sudo /bin/systemctl reload nginx'
 
                 // Deploy Backend (Docker Compose)
-                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down"
-                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose up -d --build"
+                // Explicitly bring down all services defined in the file
+                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down --remove-orphans"
+                // Explicitly build and run only the 'backend' service (and its dependencies)
+                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose up -d --build backend"
             }
         }
     }
