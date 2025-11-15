@@ -3,8 +3,9 @@ services:
     build: .
     ports:
       - "3001:3001" # Memetakan port 3001 container ke port 3001 host
-    env_file:
-      - ./.env
+    environment:
+      DATABASE_URL: "mysql://api:8T1k3u2w8kqj%2BFXfpMytoQ%3D%3D@mysql-dev:3306/api_dev"
+      PORT: "3001"
     depends_on:
       - mysql-dev
     restart: unless-stopped
