@@ -42,7 +42,7 @@ interface IProject {
   title: string;
   description: string;
   image_url: string;
-  live_url: string;
+  project_url: string; // Changed from live_url
   github_url: string;
   tech_stack: string;
 }
@@ -358,8 +358,8 @@ const App = () => {
                       <p className="mb-6 text-sm font-semibold text-blue-300">Tech: {project.tech_stack}</p>
                       <div className="flex space-x-4">
                         <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-gray-700 rounded-lg hover:bg-gray-600">Source Code</a>
-                        {project.live_url && ( // Only show Live Demo if URL exists
-                          <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-500">Live Demo</a>
+                        {project.project_url && ( // Only show Live Demo if URL exists
+                          <a href={project.project_url} target="_blank" rel="noopener noreferrer" className="px-5 py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-500">Live Demo</a>
                         )}
                       </div>
                     </div>
