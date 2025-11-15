@@ -47,9 +47,12 @@ pipeline {
                 sh 'sudo /bin/systemctl reload nginx'
 
                 // Deploy Backend (Docker Compose)
-                // Explicitly bring down all services defined in the file
                 sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down --remove-orphans"
-                // Explicitly build and run only the 'backend' service (and its dependencies)
+                
+                // FIX: Add a delay to allow the OS to release the ports
+                echo 'Waiting for 5 seconds for ports to be released...'
+                sh 'sleep 5'
+
                 sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose up -d --build backend"
             }
         }
