@@ -17,8 +17,7 @@ export const makeContactRoutes = (ctx: AppContext) => {
       
       res.status(200).json({ success: true, message: 'Pesan berhasil dikirim.' });
     } catch (error) {
-      console.error('Error in contact route:', error);
-      res.status(500).json({ success: false, message: 'Gagal mengirim pesan.' });
+      next(error);
     }
   });
 
