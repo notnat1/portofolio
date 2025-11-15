@@ -170,12 +170,18 @@ const App = () => {
   const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_URL}/contact`, contactForm);
-      alert("Pesan terkirim ke Database!");
+      const response = await axios.post(`${API_URL}/contact`, contactForm);
+      // Use the message from the backend response
+      alert(response.data.message || "Pesan berhasil dikirim.");
       setContactForm({ full_name: '', email: '', message: '' }); // Reset form
     } catch (error) {
       console.error("Gagal kirim pesan:", error);
-      alert("Gagal mengirim pesan.");
+      // Use the error message from the backend response, or a generic one
+      if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("Gagal mengirim pesan.");
+      }
     }
   };
 
