@@ -1,13 +1,17 @@
-# --- COMMAND 1: SETUP 'api'@'localhost' USER ---
+# --- COMMAND 1: RESET PASSWORD FOR 'api'@'%' ---
 # Jalankan perintah ini terlebih dahulu.
-# Ini akan memastikan user 'api' dengan host 'localhost' ada dan memiliki hak akses yang benar.
-# Perintah ini akan menghapus user jika sudah ada, membuatnya ulang, dan memberikan privileges.
-echo 'ignaciojanis' | sudo -S docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uroot -p'root_password_change_me' -e "DROP USER IF EXISTS 'api'@'localhost'; CREATE USER 'api'@'localhost' IDENTIFIED BY '8T1k3u2w8kqj+FXfpMytoQ=='; GRANT ALL PRIVILEGES ON api_dev.* TO 'api'@'localhost'; FLUSH PRIVILEGES;"
+# Ini akan mereset password untuk user 'api' yang digunakan oleh backend.
+echo 'ignaciojanis' | sudo -S docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uroot -p'root_password_change_me' -e "ALTER USER 'api'@'%' IDENTIFIED BY 'ignaciojanis';"
 
-# --- COMMAND 2: UPDATE PROJECT DETAILS ---
-# Setelah perintah pertama berhasil (tidak ada error selain warning),
+# --- COMMAND 2: RESET PASSWORD FOR 'api'@'localhost' ---
+# Jalankan perintah ini kedua.
+# Ini akan mereset password untuk user 'api' yang digunakan saat menjalankan perintah dari dalam container database.
+echo 'ignaciojanis' | sudo -S docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uroot -p'root_password_change_me' -e "ALTER USER 'api'@'localhost' IDENTIFIED BY 'ignaciojanis';"
+
+# --- COMMAND 3: UPDATE PROJECT DETAILS ---
+# Setelah kedua perintah di atas berhasil (tidak ada error selain warning),
 # jalankan perintah ini untuk mengupdate gambar dan link Source Code proyek.
-echo 'ignaciojanis' | sudo -S bash -c "docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uapi -p'8T1k3u2w8kqj+FXfpMytoQ==' api_dev -e \"UPDATE projects SET image_url = 'images/halaman Dashboard admin panel website inventory.png', source_code_url = 'https://github.com/notnat1/website-order-picking.git' WHERE id = 1;\""
+echo 'ignaciojanis' | sudo -S bash -c "docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uapi -p'ignaciojanis' api_dev -e \"UPDATE projects SET image_url = 'images/halaman Dashboard admin panel website inventory.png', source_code_url = 'https://github.com/notnat1/website-order-picking.git' WHERE id = 1;\""
 
 # --- VERIFIKASI ---
-# Setelah kedua perintah selesai, periksa situs Anda di https://portofolio.natte.site
+# Setelah semua perintah selesai, periksa situs Anda di https://portofolio.natte.site

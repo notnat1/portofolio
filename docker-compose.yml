@@ -6,6 +6,8 @@ services:
     environment:
       DATABASE_URL: "mysql://api:ignaciojanis@mysql-dev:3306/api_dev"
       PORT: "3001"
+      GMAIL_USER: "natteishere11@gmail.com"
+      GMAIL_APP_PASSWORD: "vwvywvbljxwp laca"
     depends_on:
       mysql-dev:
         condition: service_healthy

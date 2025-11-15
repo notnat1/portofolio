@@ -1,11 +1,724 @@
-natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uroot -p'root_password_change_me' -e "DROP USER IF EXISTS 'api'@'localhost'; CREATE USER 'api'@'localhost' IDENTIFIED BY '8T1k3u2w8kqj+FXfpMytoQ=='; GRANT ALL PRIVILEGES ON api_dev.* TO 'api'@'localhost'; FLUSH PRIVILEGES;"
-mysql: [Warning] Using a password on the command line interface can be insecure.
+natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S docker ps
+[sudo] password for natte: CONTAINER ID   IMAGE                          COMMAND                                                                                                                                             CREATED         STATUS                          PORTS                                                                                                                                                                               NAMES
+17509644cfba   portofolio-pippeline-backend   "docker-entrypoint.s…"   3 minutes                                                                                                                            ago   Restarting (1) 20 seconds ago                                                                                                                                                                                       portofolio-pippeline-backend-1
+3b13dd2a05a5   mysql:8                        "docker-entrypoint.s…"   3 minutes                                                                                                                            ago   Up 3 minutes                    33060/tcp, 0.0.0.0:4329->3306/tcp, [::]:4                                                                                                                           329->3306/tcp   portofolio-pippeline-mysql-dev-1
+natte@vmi2909733:~$
+natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S docker logs portofolio-pippeline-backend-1
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+natte@vmi2909733:~$ ^C
 natte@vmi2909733:~$
 natte@vmi2909733:~$
-natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uroot -p'root_password_change_me' -e "DROP USER IF EXISTS 'api'@'localhost'; CREATE USER 'api'@'localhost' IDENTIFIED BY '8T1k3u2w8kqj+FXfpMytoQ=='; GRANT ALL PRIVILEGES ON api_dev.* TO 'api'@'localhost'; FLUSH PRIVILEGES;"
-mysql: [Warning] Using a password on the command line interface can be insecure.
-natte@vmi2909733:~$
-natte@vmi2909733:~$
-natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S bash -c "docker exec -i portofolio-pippeline-mysql-dev-1 mysql -uapi -p'8T1k3u2w8kqj+FXfpMytoQ==' api_dev -e \"UPDATE projects SET image_url = 'images/halaman Dashboard admin panel website inventory.png', source_code_url = 'https://github.com/notnat1/website-order-picking.git' WHERE id = 1;\""
-mysql: [Warning] Using a password on the command line interface can be insecure.
-natte@vmi2909733:~$
+natte@vmi2909733:~$ echo 'ignaciojanis' | sudo -S docker logs portofolio-pippeline-backend-1
+[sudo] password for natte:
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: connect ECONNREFUSED 172.18.0.2:3306
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}
+
+> template-node-express@0.0.1 start
+> node dist/index.js
+
+Error: Access denied for user 'api'@'172.18.0.3' (using password: YES)
+    at PromisePool.query (/app/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at applyMigrations (/app/dist/database/migrate.js:14:16)
+    at main (/app/dist/index.js:16:41)
+    at Object.<anonymous> (/app/dist/index.js:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  code: 'ER_ACCESS_DENIED_ERROR',
+  errno: 1045,
+  sql: undefined,
+  sqlState: '28000',
+  sqlMessage: "Access denied for user 'api'@'172.18.0.3' (using password: YES)"
+}

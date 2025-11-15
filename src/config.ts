@@ -4,6 +4,8 @@ import { z } from 'zod/v4';
 export const Config = z.object({
   port: z.coerce.number().int().positive(),
   databaseUrl: z.string(),
+  gmailUser: z.string(),
+  gmailAppPassword: z.string(),
 });
 export type Config = z.infer<typeof Config>;
 
@@ -16,5 +18,7 @@ export const getConfig = (prefix?: string): Config => {
   return Config.parse({
     port: readFromEnv('PORT', prefix),
     databaseUrl: readFromEnv('DATABASE_URL', prefix),
+    gmailUser: readFromEnv('GMAIL_USER', prefix),
+    gmailAppPassword: readFromEnv('GMAIL_APP_PASSWORD', prefix),
   });
 };
