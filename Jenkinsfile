@@ -41,15 +41,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                // Deploy Frontend
-                sh 'sudo /usr/bin/rsync -av --delete /var/lib/jenkins/workspace/portofolio-pipeline/client/dist/ /var/www/portofolio.natte.site/'
+                // Menggunakan variabel ${env.WORKSPACE} untuk path yang dinamis dan benar
+                sh "sudo /usr/bin/rsync -av --delete ${env.WORKSPACE}/client/dist/ /var/www/portofolio.natte.site/"
                 sh 'sudo /usr/bin/chown -R www-data:www-data /var/www/portofolio.natte.site/'
-                sh 'sudo /usr/sbin/systemctl reload nginx' // Reload Nginx to serve new frontend
+                sh 'sudo /usr/sbin/systemctl reload nginx'
 
                 // Deploy Backend (Docker Compose)
-                // Navigate to the project root where docker-compose.yml is located
-                sh 'cd /var/lib/jenkins/workspace/portofolio-pipeline && sudo /usr/local/bin/docker-compose down'
-                sh 'cd /var/lib/jenkins/workspace/portofolio-pipeline && sudo /usr/local/bin/docker-compose up -d --build'
+                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose down"
+                sh "cd ${env.WORKSPACE} && sudo /usr/local/bin/docker-compose up -d --build"
             }
         }
     }
