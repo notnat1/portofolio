@@ -1,5 +1,0 @@
-echo 'ignaciojanis' | sudo -S bash -c "
-sed -i 's|proxy_pass https://portofolio.natte.site;|proxy_pass http://127.0.0.1:3001;|g' /etc/nginx/sites-enabled/portofolio.natte.site && \
-nginx -t && \
-systemctl restart nginx
-"
