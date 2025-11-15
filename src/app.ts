@@ -19,7 +19,7 @@ export function makeApp(ctx: AppContext): Express {
   app.use(express.static('public'));
   app.use(ctx.middleware.logger);
 
-  const contactRoutes = makeContactRoutes(ctx);
+  const contactRoutes = makeContactRoutes();
 
   app.use('/health', makeHealthRoutes(ctx));
   app.use('/people', makePeopleRoutes(ctx));
