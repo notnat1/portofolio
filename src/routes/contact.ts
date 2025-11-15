@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { AppContext } from '../app';
 import { sendContactEmail } from '../services/email';
 
-export const makeContactRoutes = (ctx: AppContext) => {
+export const makeContactRoutes = () => {
   const router = Router();
 
   router.post('/', async (req: Request, res: Response, next: NextFunction) => {
