@@ -1,6 +1,0 @@
-echo 'ignaciojanis' | sudo -S bash -c "
-mkdir -p /var/www/portofolio.natte.site && \
-rsync -a /home/natte/portofolio/client/dist/ /var/www/portofolio.natte.site/ && \
-chown -R www-data:www-data /var/www/portofolio.natte.site && \
-systemctl restart nginx
-"
